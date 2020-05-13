@@ -46,7 +46,7 @@ Then either compile the manifest using the [rsrc](https://github.com/akavel/rsrc
 
 ```
 go get github.com/akavel/rsrc
-rsrc -manifest app.manifest -o rsrc.syso
+rsrc -manifest goTranslate.manifest -o rsrc.syso
 ```
 
 ## Thanks
