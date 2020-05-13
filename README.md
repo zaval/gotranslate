@@ -44,6 +44,11 @@ You'll also need to include a Manifest for your windows app. Create a file `goTr
 
 Then either compile the manifest using the [rsrc](https://github.com/akavel/rsrc) tool, like this:
 
+```
+go get github.com/akavel/rsrc
+rsrc -manifest app.manifest -o rsrc.syso
+```
+
 ## Thanks
 
 * [systray](https://github.com/getlantern/systray) a cross-platform Go library to place an icon and menu in the notification area.
