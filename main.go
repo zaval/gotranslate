@@ -1,11 +1,11 @@
 package main
 
 import (
+	"./icon"
+	"./utils"
 	"fmt"
 	"github.com/bregydoc/gtranslate"
 	"github.com/getlantern/systray"
-	"goTranslate/icon"
-	"goTranslate/utils"
 	"regexp"
 )
 
