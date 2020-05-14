@@ -49,9 +49,7 @@ func RegisterHotkey() {
 	for {
 		var msg = &MSG{}
 		peekmsg.Call(uintptr(unsafe.Pointer(msg)), 0, 0, 0, 1)
-		fmt.Println(msg)
 		if id := msg.WPARAM; id != 0 {
-			fmt.Println(msg)
 			translated, err := Translate(GetSelectedText())
 			if err == nil {
 				ShowNotification(translated)
