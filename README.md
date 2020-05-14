@@ -49,7 +49,21 @@ go get github.com/akavel/rsrc
 rsrc -manifest goTranslate.manifest -o rsrc.syso
 ```
 
+## Cross-compile for windws host using docker
+
+* Create and switch to windows docker context using [windows-docker-machine](https://github.com/StefanScherer/windows-docker-machine)
+* Build image
+```
+cd docker
+docker build -t gotranslate-build .
+mkdir build
+docker run --rm -v C:$(pwd)/build:C:/build -it gotranslate-build:latest
+``` 
+* Compiled windows binary will appear in the `build` directory
+* PROFIT
+
 ## Thanks
 
 * [systray](https://github.com/getlantern/systray) a cross-platform Go library to place an icon and menu in the notification area.
 * [gtranslate](https://github.com/bregydoc/gtranslate) Google Translate API for unlimited and free translations
+* [go-toast](https://github.com/go-toast/toast) A go package for Windows 10 toast notifications.
