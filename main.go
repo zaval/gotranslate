@@ -3,6 +3,7 @@ package main
 import (
 	"./icon"
 	"./utils"
+	"flag"
 	"fmt"
 	"github.com/bregydoc/gtranslate"
 	"github.com/getlantern/systray"
@@ -61,6 +62,17 @@ func onExit() {
 }
 
 func main() {
+
+	var translateText string
+	flag.StringVar(&translateText, "t", "", "translate text")
+	flag.Parse()
+	if translateText != "" {
+		translated, err := translate(translateText)
+		if err == nil {
+			utils.ShowNotification(translated)
+		}
+		return
+	}
 
 	systray.RunWithAppWindow("Translate", 1024, 768, onReady, onExit)
 }
