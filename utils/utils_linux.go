@@ -19,3 +19,5 @@ func ShowNotification(text string) {
 	cmd := exec.Command("notify-send", text)
 	cmd.CombinedOutput()
 }
+
+func RegisterHotkey() {}

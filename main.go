@@ -1,12 +1,13 @@
 package main
 
 import (
-	"./icon"
-	"./utils"
 	"flag"
 	"fmt"
-	"github.com/getlantern/systray"
 	"runtime"
+
+	"./icon"
+	"./utils"
+	"github.com/getlantern/systray"
 )
 
 func onReady() {
@@ -51,8 +52,6 @@ func main() {
 	if runtime.GOOS == "windows" {
 		go utils.RegisterHotkey()
 	}
-
-	fmt.Println(int('A'))
 
 	systray.RunWithAppWindow("Translate", 1024, 768, onReady, onExit)
 
