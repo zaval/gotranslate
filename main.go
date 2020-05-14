@@ -5,35 +5,9 @@ import (
 	"./utils"
 	"flag"
 	"fmt"
-	"github.com/bregydoc/gtranslate"
 	"github.com/getlantern/systray"
-	"regexp"
+	"runtime"
 )
-
-func translate(inputText string) (string, error) {
-
-	langFrom := "en"
-	langTo := "ru"
-	re := regexp.MustCompile(`([а-яА-ЯёЁ]{2,})`)
-	res := re.FindString(inputText)
-	if res != "" {
-		langFrom = "ru"
-		langTo = "en"
-	}
-
-	translated, err := gtranslate.TranslateWithParams(
-		inputText,
-		gtranslate.TranslationParams{
-			From: langFrom,
-			To:   langTo,
-		},
-	)
-	if err != nil {
-		return "", err
-	}
-
-	return translated, nil
-}
 
 func onReady() {
 	systray.SetTitle("goTranslate")
@@ -42,7 +16,7 @@ func onReady() {
 	go func() {
 		for {
 			<-mTranslate.ClickedCh
-			translated, err := translate(utils.GetSelectedText())
+			translated, err := utils.Translate(utils.GetSelectedText())
 			if err == nil {
 				utils.ShowNotification(translated)
 			}
@@ -67,12 +41,19 @@ func main() {
 	flag.StringVar(&translateText, "t", "", "translate text")
 	flag.Parse()
 	if translateText != "" {
-		translated, err := translate(translateText)
+		translated, err := utils.Translate(translateText)
 		if err == nil {
 			utils.ShowNotification(translated)
 		}
 		return
 	}
 
+	if runtime.GOOS == "windows" {
+		go utils.RegisterHotkey()
+	}
+
+	fmt.Println(int('A'))
+
 	systray.RunWithAppWindow("Translate", 1024, 768, onReady, onExit)
+
 }
