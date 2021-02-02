@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"runtime"
 
-	"./icon"
-	"./utils"
+	"goTranslate/icon"
+	"goTranslate/utils"
+
 	"github.com/getlantern/systray"
 )
 
@@ -39,9 +40,19 @@ func onExit() {
 func main() {
 
 	var translateText string
+	var windowTranslate bool
 	flag.StringVar(&translateText, "t", "", "translate text")
+	flag.BoolVar(&windowTranslate, "w", false, "translate selected text")
 	flag.Parse()
 	if translateText != "" {
+		translated, err := utils.Translate(translateText)
+		if err == nil {
+			utils.ShowNotification(translated)
+		}
+		return
+	}
+	if windowTranslate {
+		translateText := utils.GetSelectedText()
 		translated, err := utils.Translate(translateText)
 		if err == nil {
 			utils.ShowNotification(translated)
@@ -53,6 +64,6 @@ func main() {
 		go utils.RegisterHotkey()
 	}
 
-	systray.RunWithAppWindow("Translate", 1024, 768, onReady, onExit)
+	systray.Run(onReady, onExit)
 
 }
