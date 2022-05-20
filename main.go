@@ -40,7 +40,9 @@ func onExit() {
 func main() {
 
 	var translateText string
+	var windowTranslate bool
 	flag.StringVar(&translateText, "t", "", "translate text")
+	flag.BoolVar(&windowTranslate, "w", false, "translate selected text")
 	flag.Parse()
 
 	if translateText != "" {
@@ -50,7 +52,14 @@ func main() {
 		if err == nil {
 			utils.ShowNotification(translated)
 		}
-		//fmt.Println(translated)
+		return
+	}
+	if windowTranslate {
+		translateText := utils.GetSelectedText()
+		translated, err := utils.Translate(translateText)
+		if err == nil {
+			utils.ShowNotification(translated)
+		}
 		return
 	}
 
