@@ -2,11 +2,19 @@ package utils
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 )
 
 func GetSelectedText() string {
-	cmd := exec.Command("xsel")
+
+	var cmd *exec.Cmd
+	if os.Getenv("XDG_SESSION_TYPE") == "wayland" {
+		cmd = exec.Command("wl-paste", "-p")
+	} else {
+		cmd = exec.Command("xsel")
+	}
+
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println(err)
